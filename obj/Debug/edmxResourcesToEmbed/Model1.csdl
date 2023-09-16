@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ManagementSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Batch1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Year" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Student_Registration" Relationship="Self.FK__Student_R__Batch__2D27B809" FromRole="Batch" ToRole="Student_Registration" />
+    <NavigationProperty Name="std_Info" Relationship="ManagementSystemModel.FK__std_Info__Batch___44FF419A" FromRole="Batch" ToRole="std_Info" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Precision="0" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Student_Registration" Relationship="Self.FK__Student_R__Cours__2C3393D0" FromRole="Course" ToRole="Student_Registration" />
+    <NavigationProperty Name="std_Info" Relationship="ManagementSystemModel.FK__std_Info__Course__45F365D3" FromRole="Course" ToRole="std_Info" />
+  </EntityType>
+  <EntityType Name="Exam__Info">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Exam_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RoomNo" Type="Int32" />
+    <Property Name="Teacher_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Attandance_date" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Student_Registration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TeleNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Precision="0" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Course_id" Type="Int32" />
+    <Property Name="Batch_id" Type="Int32" />
+    <NavigationProperty Name="Batch" Relationship="Self.FK__Student_R__Batch__2D27B809" FromRole="Student_Registration" ToRole="Batch" />
+    <NavigationProperty Name="Course" Relationship="Self.FK__Student_R__Cours__2C3393D0" FromRole="Student_Registration" ToRole="Course" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__Student_R__Batch__2D27B809">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+    <End Role="Student_Registration" Type="Self.Student_Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student_Registration">
+        <PropertyRef Name="Batch_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Student_R__Cours__2C3393D0">
+    <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+    <End Role="Student_Registration" Type="Self.Student_Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student_Registration">
+        <PropertyRef Name="Course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ManagementSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Batches" EntityType="Self.Batch" />
+    <EntitySet Name="Courses" EntityType="Self.Course" />
+    <EntitySet Name="Exam__Info" EntityType="Self.Exam__Info" />
+    <EntitySet Name="Student_Registration" EntityType="Self.Student_Registration" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__Student_R__Batch__2D27B809" Association="Self.FK__Student_R__Batch__2D27B809">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="Student_Registration" EntitySet="Student_Registration" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Student_R__Cours__2C3393D0" Association="Self.FK__Student_R__Cours__2C3393D0">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Student_Registration" EntitySet="Student_Registration" />
+    </AssociationSet>
+    <EntitySet Name="teachers" EntityType="ManagementSystemModel.teacher" />
+    <EntitySet Name="std_Info" EntityType="ManagementSystemModel.std_Info" />
+    <AssociationSet Name="FK__std_Info__Batch___44FF419A" Association="ManagementSystemModel.FK__std_Info__Batch___44FF419A">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="std_Info" EntitySet="std_Info" />
+    </AssociationSet>
+    <AssociationSet Name="FK__std_Info__Course__45F365D3" Association="ManagementSystemModel.FK__std_Info__Course__45F365D3">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="std_Info" EntitySet="std_Info" />
+    </AssociationSet>
+    <FunctionImport Name="sp_reg" ReturnType="Collection(ManagementSystemModel.sp_reg_Result)" />
+    <FunctionImport Name="Sp_reg_Join" ReturnType="Collection(ManagementSystemModel.Sp_reg_Join_Result)" />
+    <FunctionImport Name="sp_Course" ReturnType="Collection(ManagementSystemModel.sp_Course_Result)" />
+    <FunctionImport Name="sp_teacher" ReturnType="Collection(ManagementSystemModel.sp_teacher_Result)" />
+  </EntityContainer>
+  <EntityType Name="teacher">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CourseName1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CourseName2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CourseName3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Total_Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="std_Info">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Batch_id" Type="Int32" />
+    <Property Name="Course_id" Type="Int32" />
+    <NavigationProperty Name="Batch" Relationship="ManagementSystemModel.FK__std_Info__Batch___44FF419A" FromRole="std_Info" ToRole="Batch" />
+    <NavigationProperty Name="Course" Relationship="ManagementSystemModel.FK__std_Info__Course__45F365D3" FromRole="std_Info" ToRole="Course" />
+  </EntityType>
+  <Association Name="FK__std_Info__Batch___44FF419A">
+    <End Type="ManagementSystemModel.Batch" Role="Batch" Multiplicity="0..1" />
+    <End Type="ManagementSystemModel.std_Info" Role="std_Info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="std_Info">
+        <PropertyRef Name="Batch_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__std_Info__Course__45F365D3">
+    <End Type="ManagementSystemModel.Course" Role="Course" Multiplicity="0..1" />
+    <End Type="ManagementSystemModel.std_Info" Role="std_Info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="std_Info">
+        <PropertyRef Name="Course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_reg_Result">
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="TeleNo" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_reg_Join_Result">
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CourseName" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_Course_Result">
+    <Property Type="String" Name="CourseName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Duration" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_teacher_Result">
+    <Property Type="String" Name="TeacherName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Total_Duration" Nullable="true" MaxLength="50" />
+  </ComplexType>
+</Schema>

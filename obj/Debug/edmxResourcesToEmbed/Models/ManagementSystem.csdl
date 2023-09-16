@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ManagementSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Batch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Batch1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Year" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="std_Info" Relationship="Self.FK__std_Info__Batch___48CFD27E" FromRole="Batch" ToRole="std_Info" />
+    <NavigationProperty Name="Student_Registration" Relationship="Self.FK__Student_R__Batch__3C69FB99" FromRole="Batch" ToRole="Student_Registration" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="CourseName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Duration" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Precision="0" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="std_Info" Relationship="Self.FK__std_Info__Course__49C3F6B7" FromRole="Course" ToRole="std_Info" />
+    <NavigationProperty Name="Student_Registration" Relationship="Self.FK__Student_R__Cours__3B75D760" FromRole="Course" ToRole="Student_Registration" />
+  </EntityType>
+  <EntityType Name="Exam__Info">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Exam_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="RoomNo" Type="Int32" />
+    <Property Name="Teacher_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="std_Info">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Batch_id" Type="Int32" />
+    <Property Name="Course_id" Type="Int32" />
+    <NavigationProperty Name="Batch" Relationship="Self.FK__std_Info__Batch___48CFD27E" FromRole="std_Info" ToRole="Batch" />
+    <NavigationProperty Name="Course" Relationship="Self.FK__std_Info__Course__49C3F6B7" FromRole="std_Info" ToRole="Course" />
+  </EntityType>
+  <EntityType Name="Student_Registration">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="TeleNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreateDate" Type="DateTime" Precision="0" />
+    <Property Name="DeleteDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Course_id" Type="Int32" />
+    <Property Name="Batch_id" Type="Int32" />
+    <NavigationProperty Name="Batch" Relationship="Self.FK__Student_R__Batch__3C69FB99" FromRole="Student_Registration" ToRole="Batch" />
+    <NavigationProperty Name="Course" Relationship="Self.FK__Student_R__Cours__3B75D760" FromRole="Student_Registration" ToRole="Course" />
+  </EntityType>
+  <EntityType Name="teacher">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="TeacherName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CourseName1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CourseName2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CourseName3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Total_Duration" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__std_Info__Batch___48CFD27E">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+    <End Role="std_Info" Type="Self.std_Info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="std_Info">
+        <PropertyRef Name="Batch_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Student_R__Batch__3C69FB99">
+    <End Role="Batch" Type="Self.Batch" Multiplicity="0..1" />
+    <End Role="Student_Registration" Type="Self.Student_Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Batch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student_Registration">
+        <PropertyRef Name="Batch_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__std_Info__Course__49C3F6B7">
+    <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+    <End Role="std_Info" Type="Self.std_Info" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="std_Info">
+        <PropertyRef Name="Course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Student_R__Cours__3B75D760">
+    <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+    <End Role="Student_Registration" Type="Self.Student_Registration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student_Registration">
+        <PropertyRef Name="Course_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ManagementSystemEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Batches" EntityType="Self.Batch" />
+    <EntitySet Name="Courses" EntityType="Self.Course" />
+    <EntitySet Name="Exam__Info" EntityType="Self.Exam__Info" />
+    <EntitySet Name="std_Info" EntityType="Self.std_Info" />
+    <EntitySet Name="Student_Registration" EntityType="Self.Student_Registration" />
+    <EntitySet Name="teachers" EntityType="Self.teacher" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__std_Info__Batch___48CFD27E" Association="Self.FK__std_Info__Batch___48CFD27E">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="std_Info" EntitySet="std_Info" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Student_R__Batch__3C69FB99" Association="Self.FK__Student_R__Batch__3C69FB99">
+      <End Role="Batch" EntitySet="Batches" />
+      <End Role="Student_Registration" EntitySet="Student_Registration" />
+    </AssociationSet>
+    <AssociationSet Name="FK__std_Info__Course__49C3F6B7" Association="Self.FK__std_Info__Course__49C3F6B7">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="std_Info" EntitySet="std_Info" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Student_R__Cours__3B75D760" Association="Self.FK__Student_R__Cours__3B75D760">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Student_Registration" EntitySet="Student_Registration" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
